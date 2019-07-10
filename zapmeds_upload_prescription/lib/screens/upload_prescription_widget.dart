@@ -1,6 +1,21 @@
 
 import 'package:flutter/material.dart';
 
+class _MyAppState extends State<MyApp> {
+
+    File _image;
+
+  Future getImage(bool isCamera) async {
+    File image;
+    if(isCamera) {
+      image = await ImagePicker.pickImage(source: ImageSource.camera);
+    } else {
+      image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    }
+    setState((){
+      _image = image;
+    });
+  }
 
 class UploadPrescriptionWidget extends StatelessWidget {
   
@@ -767,6 +782,9 @@ class UploadPrescriptionWidget extends StatelessWidget {
                                     child: Image.asset(
                                       "assets/images/photo-camera.png",
                                       fit: BoxFit.none,
+                                      onPressed: () {
+                                        getImage(true);
+                                      },
                                     ),
                                   ),
                                 ),
@@ -779,6 +797,9 @@ class UploadPrescriptionWidget extends StatelessWidget {
                                     child: Image.asset(
                                       "assets/images/picture.png",
                                       fit: BoxFit.none,
+                                      onPressed: () {
+                                        getImage(false);
+                                      },
                                     ),
                                   ),
                                 ),
